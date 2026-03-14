@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { 
-  CpuIcon, 
+  CpuChipIcon, 
   ChartBarIcon, 
-  TargetIcon, 
   ArrowRightIcon,
   SparklesIcon,
   GlobeAltIcon,
   ShieldCheckIcon,
   ClockIcon,
-  LightBulbIcon
+  LightBulbIcon,
+  RocketLaunchIcon
 } from "@heroicons/react/24/outline";
 
 export default function Home() {
@@ -70,7 +70,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <CpuIcon className="w-12 h-12 text-cyan-400" />,
+                icon: <CpuChipIcon className="w-12 h-12 text-cyan-400" />,
                 title: "AI Agent驱动",
                 description: "先进的AI智能体技术，24小时不间断监控市场，捕捉投资机会"
               },
@@ -80,7 +80,7 @@ export default function Home() {
                 description: "基于大数据的量化分析模型，科学决策，减少情绪干扰"
               },
               {
-                icon: <TargetIcon className="w-12 h-12 text-green-400" />,
+                icon: <RocketLaunchIcon className="w-12 h-12 text-green-400" />,
                 title: "Alpha收益",
                 description: "专注挖掘偏中期趋势机会，追求稳定的超额收益"
               }
@@ -109,7 +109,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
-                icon: <CpuIcon className="w-10 h-10 text-cyan-400" />,
+                icon: <CpuChipIcon className="w-10 h-10 text-cyan-400" />,
                 title: "智能交易助手",
                 description: "基于AI Agent的智能交易辅助系统，实时分析市场数据，提供专业的交易建议和风险提示。",
                 features: [
@@ -123,7 +123,7 @@ export default function Home() {
                 title: "量化分析平台",
                 description: "强大的量化分析工具，提供多维度数据分析、回测功能，帮助您验证投资策略。",
                 features: [
-                  { icon: <TargetIcon className="w-4 h-4" />, text: "策略回测" },
+                  { icon: <RocketLaunchIcon className="w-4 h-4" />, text: "策略回测" },
                   { icon: <ChartBarIcon className="w-4 h-4" />, text: "数据可视化" },
                   { icon: <LightBulbIcon className="w-4 h-4" />, text: "因子分析" }
                 ]
