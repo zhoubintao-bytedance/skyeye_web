@@ -4,4 +4,4 @@
 :HL["/skyeye_web/imgs/test.png","image"]
 :HL["/skyeye_web/imgs/zhihu.svg","image"]
 :HL["/skyeye_web/imgs/bilibili.svg","image"]
-0:{"buildId":"UBIUDu9A2SDr1xzlkv0EG","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+0:{"buildId":"cCegfyl3H5H4YhDqB5WdE","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
