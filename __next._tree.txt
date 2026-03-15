@@ -1,6 +1,6 @@
-:HL["/skyeye_web/_next/static/chunks/37ef9cb7e4602a94.css","style"]
+:HL["/skyeye_web/_next/static/chunks/8ef2a6fe60860ada.css","style"]
 :HL["/skyeye_web/imgs/skyeye_logo.png","image"]
 :HL["/skyeye_web/imgs/test.png","image"]
 :HL["/skyeye_web/imgs/zhihu.svg","image"]
 :HL["/skyeye_web/imgs/bilibili.svg","image"]
-0:{"buildId":"qc8DthxlAWOL1R77msuyP","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+0:{"buildId":"98DLrs0JgkDLYiw2PmV45","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
