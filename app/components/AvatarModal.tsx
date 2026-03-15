@@ -22,6 +22,7 @@ export default function AvatarModal({
       <img
         src={src}
         alt={alt}
+        loading="lazy"
         className={`cursor-pointer ${className || ""}`}
         onClick={() => setOpen(true)}
       />

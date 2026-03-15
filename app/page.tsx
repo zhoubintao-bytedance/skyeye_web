@@ -461,7 +461,7 @@ export default function Home() {
               </div>
               {product.tag === "TOOL" && (
                 <div className="mt-4 border border-dashed border-[#333] rounded overflow-hidden">
-                  <img src={`${basePath}/imgs/test.png`} alt="自研回测与打分系统" className="w-full opacity-90" />
+                  <img src={`${basePath}/imgs/test.png`} alt="自研回测与打分系统" loading="lazy" className="w-full opacity-90" />
                   <p className="text-[#666] text-xs text-center py-2 m-0">自研回测与打分系统</p>
                 </div>
               )}
