@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import SideNav from "./components/SideNav";
 
 export const metadata: Metadata = {
   title: "天眼投资北京有限公司",
@@ -84,6 +85,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className="min-h-screen">
+        <SideNav />
         <Navigation />
         <div className="w-[90%] max-w-[1000px] mx-auto">
           {children}

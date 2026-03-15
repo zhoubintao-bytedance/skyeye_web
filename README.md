@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 天眼投资官网
 
-## Getting Started
+天眼投资北京有限公司官方网站，基于 Next.js 构建的单页应用。
 
-First, run the development server:
+## 技术栈
+
+- **Next.js 16** (App Router, 静态导出)
+- **React 19** + **TypeScript**
+- **Tailwind CSS 4**
+- **GitHub Pages** 部署
+
+## 快速开始
 
 ```bash
+# 一键启动（自动检查环境、安装依赖、编译、启动）
+./start.sh
+
+# 或手动启动
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> 需要 Node.js >= 20
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 常用命令
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| 命令 | 说明 |
+|------|------|
+| `npm run dev` | 启动开发服务器 (localhost:3000) |
+| `npm run build` | 静态编译 |
+| `npm run deploy` | 编译并部署到 GitHub Pages |
 
-## Learn More
+## 项目结构
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+├── layout.tsx          # 根布局（导航栏、页脚）
+├── page.tsx            # 主页面（所有内容区块）
+├── globals.css         # 全局样式
+└── components/
+    ├── SideNav.tsx      # 左侧目录导航
+    ├── AvatarModal.tsx  # 图片弹窗
+    └── WeChatQRModal.tsx # 微信二维码弹窗
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+&copy; 2026 天眼投资北京有限公司. All rights reserved.

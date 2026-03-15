@@ -90,31 +90,32 @@ body {
   border-color: #b5e853;
 }
 
-/* Hacker button - matches Jekyll theme .btn */
+/* Hacker button - secondary */
 .hacker-btn {
   display: inline-block;
-  background: linear-gradient(to bottom, rgba(40, 40, 40, 0.3), rgba(35, 35, 35, 0.3) 50%, rgba(10, 10, 10, 0.3) 50%, rgba(0, 0, 0, 0.3));
-  padding: 8px 18px;
+  background: rgba(181, 232, 83, 0.05);
+  padding: 10px 24px;
   border-radius: 50px;
-  border: 2px solid rgba(0, 0, 0, 0.7);
-  color: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(181, 232, 83, 0.25);
+  color: rgba(181, 232, 83, 0.8);
   font-weight: bold;
-  font-size: 13px;
+  font-size: 14px;
   text-decoration: none;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  text-shadow: none;
   transition: all 0.3s ease;
 }
 
 .hacker-btn:hover {
-  background: linear-gradient(to bottom, rgba(40, 40, 40, 0.6), rgba(35, 35, 35, 0.6) 50%, rgba(10, 10, 10, 0.8) 50%, rgba(0, 0, 0, 0.8));
+  background: rgba(181, 232, 83, 0.1);
+  border-color: rgba(181, 232, 83, 0.5);
   color: #b5e853;
+  text-shadow: 0 0 5px rgba(181, 232, 83, 0.3);
 }
 
 /* Primary green button */
 .hacker-btn-primary {
   display: inline-block;
-  background: linear-gradient(to bottom, rgba(181, 232, 83, 0.2), rgba(143, 196, 58, 0.2) 50%, rgba(100, 150, 30, 0.2) 50%, rgba(80, 130, 20, 0.2));
+  background: rgba(181, 232, 83, 0.15);
   padding: 10px 24px;
   border-radius: 50px;
   border: 2px solid rgba(181, 232, 83, 0.4);
@@ -127,13 +128,13 @@ body {
 }
 
 .hacker-btn-primary:hover {
-  background: linear-gradient(to bottom, rgba(181, 232, 83, 0.3), rgba(143, 196, 58, 0.3) 50%, rgba(100, 150, 30, 0.3) 50%, rgba(80, 130, 20, 0.3));
+  background: rgba(181, 232, 83, 0.25);
   border-color: rgba(181, 232, 83, 0.7);
   box-shadow: 0 0 10px rgba(181, 232, 83, 0.2);
 }
 
 /* Link style matching hacker theme */
-a {
+a:not([class]) {
   color: #63c0f5;
   text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
 }
@@ -190,4 +191,32 @@ a {
 
 .hacker-input::placeholder {
   color: #666;
+}
+
+/* Side nav links - override global a styles */
+.sidenav-link {
+  color: #555;
+  text-shadow: none;
+  transition: color 0.3s ease;
+}
+.sidenav-link:hover {
+  color: #eaeaea;
+}
+.sidenav-link.active {
+  color: #b5e853;
+}
+
+/* Custom scrollbar for team slider */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #b5e853;
+  border-radius: 3px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #63c0f5;
 }
