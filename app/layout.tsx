@@ -22,11 +22,17 @@ function Navigation() {
             <a href="#home" className="text-[#63c0f5] hover:text-[#b5e853] transition-colors text-sm no-underline">
               首页
             </a>
+            <a href="#advantages" className="text-[#63c0f5] hover:text-[#b5e853] transition-colors text-sm no-underline">
+              核心优势
+            </a>
             <a href="#about" className="text-[#63c0f5] hover:text-[#b5e853] transition-colors text-sm no-underline">
               关于我们
             </a>
             <a href="#products" className="text-[#63c0f5] hover:text-[#b5e853] transition-colors text-sm no-underline">
               产品服务
+            </a>
+            <a href="#careers" className="text-[#63c0f5] hover:text-[#b5e853] transition-colors text-sm no-underline">
+              招贤纳士
             </a>
             <a href="#contact" className="text-[#63c0f5] hover:text-[#b5e853] transition-colors text-sm no-underline">
               联系我们
@@ -56,8 +62,10 @@ function Footer() {
             <h3 className="hacker-glow text-base mb-3">快速链接</h3>
             <ul className="space-y-1 list-none p-0">
               <li><a href="#home" className="text-[#63c0f5] hover:text-[#b5e853] text-sm no-underline">首页</a></li>
+              <li><a href="#advantages" className="text-[#63c0f5] hover:text-[#b5e853] text-sm no-underline">核心优势</a></li>
               <li><a href="#about" className="text-[#63c0f5] hover:text-[#b5e853] text-sm no-underline">关于我们</a></li>
               <li><a href="#products" className="text-[#63c0f5] hover:text-[#b5e853] text-sm no-underline">产品服务</a></li>
+              <li><a href="#careers" className="text-[#63c0f5] hover:text-[#b5e853] text-sm no-underline">招贤纳士</a></li>
               <li><a href="#contact" className="text-[#63c0f5] hover:text-[#b5e853] text-sm no-underline">联系我们</a></li>
             </ul>
           </div>
