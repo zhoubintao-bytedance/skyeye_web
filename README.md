@@ -30,6 +30,22 @@ npm run dev
 | `npm run build` | 静态编译 |
 | `npm run deploy` | 编译并部署到 GitHub Pages |
 
+## 部署
+
+项目通过 GitHub Pages 部署，使用 `gh-pages` 工具将静态文件推送到 `gh-pages` 分支。
+
+```bash
+# 一键部署（编译 + 发布到 GitHub Pages）
+npm run deploy
+```
+
+部署流程：
+1. `next build` 静态编译，输出到 `out/` 目录
+2. 创建 `.nojekyll` 文件（避免 GitHub Pages 忽略 `_next` 目录）
+3. `gh-pages -d out` 将 `out/` 推送到 `gh-pages` 分支
+
+> 确保 GitHub 仓库 Settings → Pages 中 Source 设置为 `gh-pages` 分支。
+
 ## 项目结构
 
 ```
