@@ -2,8 +2,6 @@ import Link from "next/link";
 import { posts, getPostBySlug, categoryColors } from "../posts";
 import { notFound } from "next/navigation";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-
 export function generateStaticParams() {
   return posts
     .filter((p) => p.published)
@@ -129,7 +127,7 @@ export default async function BlogPostPage({
       {/* Back link */}
       <div className="mb-8">
         <Link
-          href={`${basePath}/blog`}
+          href={"/blog"}
           className="text-[#63c0f5] hover:text-[#b5e853] text-sm no-underline transition-colors"
         >
           <span className="text-[#555]">$</span> cd ../blog/ &larr; 返回博客
@@ -185,13 +183,13 @@ export default async function BlogPostPage({
       {/* Bottom nav */}
       <div className="mt-12 flex items-center gap-6">
         <Link
-          href={`${basePath}/blog`}
+          href={"/blog"}
           className="text-[#63c0f5] hover:text-[#b5e853] text-sm no-underline transition-colors"
         >
           &larr; 所有文章
         </Link>
         <Link
-          href={`${basePath}/`}
+          href="/"
           className="text-[#63c0f5] hover:text-[#b5e853] text-sm no-underline transition-colors"
         >
           &larr; 首页

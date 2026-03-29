@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { posts, categoryColors } from "./posts";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-
 export default function BlogPage() {
   const publishedPosts = posts.filter((p) => p.published);
   const upcomingPosts = posts.filter((p) => !p.published);
@@ -27,7 +25,7 @@ export default function BlogPage() {
           return (
             <Link
               key={post.slug}
-              href={`${basePath}/blog/${post.slug}`}
+              href={`/blog/${post.slug}`}
               className="block no-underline group"
               aria-label={post.title}
             >
@@ -121,7 +119,7 @@ export default function BlogPage() {
       {/* Footer prompt */}
       <div className="mt-12 text-center">
         <Link
-          href={`${basePath}/`}
+          href="/"
           className="text-[#63c0f5] hover:text-[#b5e853] text-sm no-underline transition-colors"
         >
           <span className="text-[#555]">$</span> cd ~/ &larr; 返回首页
