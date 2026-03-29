@@ -133,74 +133,24 @@ export default function Home() {
         {/* 策略净值曲线 */}
         <div className="mt-8 terminal-block p-6">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-[#666] text-sm m-0">$ plot strategy_performance.dat</p>
+            <p className="text-[#666] text-sm m-0">$ plot strategy_performance.dat <span className="text-[#444] text-xs">// 2023-01 ~ 2026-03</span></p>
             <div className="flex gap-4 text-xs">
               <span className="flex items-center gap-1"><span className="inline-block w-3 h-[2px] bg-[#b5e853]"></span> 天眼策略</span>
-              <span className="flex items-center gap-1"><span className="inline-block w-3 h-[2px] bg-[#555]"></span> 沪深300</span>
+              <span className="flex items-center gap-1"><span className="inline-block w-3 h-[2px] bg-[#63c0f5]"></span> 沪深300</span>
             </div>
           </div>
-          <div className="relative h-[200px] md:h-[280px] w-full">
-            {/* Y轴标签 */}
-            <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-[#555] text-xs w-10 pr-2 text-right">
-              <span>120%</span>
-              <span>90%</span>
-              <span>60%</span>
-              <span>30%</span>
-              <span>0%</span>
-            </div>
-            {/* 图表区 */}
-            <div className="absolute left-12 right-0 top-0 bottom-6 border-l border-b border-[#333]">
-              {/* 网格线 */}
-              {[0, 1, 2, 3].map(i => (
-                <div key={i} className="absolute w-full border-t border-dashed border-[#222]" style={{ top: `${i * 25}%` }} />
-              ))}
-              {/* 天眼策略曲线 */}
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1000 400" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="strategyGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#b5e853" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="#b5e853" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                {/* 策略填充区域 */}
-                <path d="M0,380 C50,365 100,345 143,335 C155,320 165,310 170,305 C190,312 240,318 286,320 C315,340 345,358 360,365 C390,350 415,338 429,335 C460,315 520,290 571,275 C585,282 595,288 600,290 C640,255 680,220 714,200 C750,165 800,130 857,110 C900,98 960,85 1000,80 L1000,400 L0,400 Z" fill="url(#strategyGradient)" />
-                {/* 策略线 - 6年累计约+100% */}
-                <path d="M0,380 C50,365 100,345 143,335 C155,320 165,310 170,305 C190,312 240,318 286,320 C315,340 345,358 360,365 C390,350 415,338 429,335 C460,315 520,290 571,275 C585,282 595,288 600,290 C640,255 680,220 714,200 C750,165 800,130 857,110 C900,98 960,85 1000,80" fill="none" stroke="#b5e853" strokeWidth="3" />
-                {/* 沪深300基准线 - 真实走势 */}
-                <path d="M0,380 C50,355 100,310 143,290 C155,265 165,248 170,236 C190,270 240,300 286,311 C315,345 345,380 360,393 C390,392 415,390 429,389 C460,392 520,395 571,395 C585,395 630,395 670,395 C685,395 690,395 693,382 C696,372 699,368 702,365 C706,375 710,382 714,386 C740,365 775,345 800,338 C835,333 850,332 857,332 C900,333 960,335 1000,335" fill="none" stroke="#555" strokeWidth="2" strokeDasharray="6,4" />
-              </svg>
-              {/* 关键数据点标注 */}
-              <div className="absolute text-xs" style={{ left: '88%', top: '15%' }}>
-                <span className="text-[#b5e853] bg-[#1a1a1a] px-1 rounded">+112%</span>
-              </div>
-              <div className="absolute text-xs" style={{ left: '88%', top: '78%' }}>
-                <span className="text-[#666] bg-[#1a1a1a] px-1 rounded">+15%</span>
-              </div>
-              {/* 沪深300 2021年2月高点标注 */}
-              <div className="absolute text-xs" style={{ left: '14%', top: '72%' }}>
-                <span className="text-[#555] bg-[#1a1a1a] px-1 rounded text-[10px]">5930</span>
-              </div>
-              {/* 924行情标注 */}
-              <div className="absolute text-xs" style={{ left: '66%', top: '88%' }}>
-                <span className="text-[#555] bg-[#1a1a1a] px-1 rounded text-[10px]">924行情</span>
-              </div>
-            </div>
-            {/* X轴标签 */}
-            <div className="absolute left-12 right-0 bottom-0 flex justify-between text-[#555] text-xs">
-              <span>2020</span>
-              <span>2021</span>
-              <span>2022</span>
-              <span>2023</span>
-              <span>2024</span>
-              <span>2025</span>
-              <span>2026</span>
-            </div>
-          </div>
-          <div className="mt-4 flex gap-6 text-xs border-t border-[#333] pt-3">
-            <span className="text-[#888]">年化收益率 <span className="text-[#b5e853] font-bold">+16.2%</span></span>
-            <span className="text-[#888]">最大回撤 <span className="text-[#f4bf75] font-bold">-13.8%</span></span>
-            <span className="text-[#888]">夏普比率 <span className="text-[#63c0f5] font-bold">1.55</span></span>
-            <span className="text-[#888]">胜率 <span className="text-[#b5e853] font-bold">71.5%</span></span>
+          <img
+            src={`${basePath}/imgs/tx1_vs_hs300_23_26.png`}
+            alt="天眼策略 vs 沪深300 净值曲线 2023-2026"
+            className="w-full rounded"
+          />
+          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs border-t border-[#333] pt-3">
+            <span className="text-[#888]">累计收益 <span className="text-[#b5e853] font-bold">+70.7%</span></span>
+            <span className="text-[#888]">年化收益率 <span className="text-[#b5e853] font-bold">+20.3%</span></span>
+            <span className="text-[#888]">最大回撤 <span className="text-[#f4bf75] font-bold">-33.4%</span></span>
+            <span className="text-[#888]">夏普比率 <span className="text-[#63c0f5] font-bold">0.80</span></span>
+            <span className="text-[#888]">胜率 <span className="text-[#b5e853] font-bold">52.6%</span></span>
+            <span className="text-[#888]">超额收益 <span className="text-[#b5e853] font-bold">+56.2%</span></span>
           </div>
         </div>
       </section>
