@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // 忽略本地调试和工具生成目录，避免将镜像工作区与产物纳入 lint。
+    ".buildcheck/**",
+    ".superpowers/**",
+    ".codex",
   ]),
 ]);
 

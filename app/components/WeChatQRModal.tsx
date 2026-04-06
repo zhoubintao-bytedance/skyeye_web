@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+/* 微信二维码弹窗作为联系合作入口，沿用新的工业化按钮样式。 */
 export default function WeChatQRModal({ qrSrc }: { qrSrc: string }) {
   const [open, setOpen] = useState(false);
 
@@ -9,7 +10,7 @@ export default function WeChatQRModal({ qrSrc }: { qrSrc: string }) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="hacker-btn no-underline text-sm flex items-center gap-2 px-3 py-2 cursor-pointer bg-transparent"
+        className="inline-flex cursor-pointer items-center gap-2 border-2 border-[#76b900] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[#1eaedb]"
         title="微信"
       >
         <svg className="w-6 h-6" viewBox="0 0 24 24" fill="#07C160">
@@ -24,17 +25,18 @@ export default function WeChatQRModal({ qrSrc }: { qrSrc: string }) {
           onClick={() => setOpen(false)}
         >
           <div
-            className="relative bg-[#1a1a1a] border border-dashed border-[#b5e853] p-6 rounded max-w-sm mx-4"
+            className="relative mx-4 max-w-sm border border-[rgba(118,185,0,0.45)] bg-[#050505] p-6 shadow-[0_0_5px_rgba(0,0,0,0.3)]"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setOpen(false)}
-              className="absolute top-2 right-3 text-[#888] hover:text-[#b5e853] text-2xl cursor-pointer bg-transparent border-none font-mono"
+              aria-label="关闭微信二维码"
+              className="absolute top-2 right-3 cursor-pointer border-none bg-transparent text-2xl text-[#898989] hover:text-[#76b900]"
             >
               &times;
             </button>
-            <p className="text-[#b5e853] text-sm mb-3 text-center">请CEO喝杯咖啡</p>
-            <img src={qrSrc} alt="微信二维码" className="w-64 h-64 object-contain mx-auto rounded" />
+            <p className="mb-3 text-center text-sm font-bold text-[#76b900]">微信联系</p>
+            <img src={qrSrc} alt="微信二维码" className="mx-auto h-64 w-64 object-contain" />
           </div>
         </div>
       )}

@@ -9,6 +9,7 @@ export interface BlogPost {
   category: string;
   readTime: string;
   published: boolean;
+  featuredOnHome?: boolean;
 }
 
 export const categoryColors: Record<string, string> = {
@@ -29,6 +30,7 @@ export const posts: BlogPost[] = [
     category: "STORY",
     readTime: "5 min",
     published: true,
+    featuredOnHome: true,
   },
   {
     slug: "ai-agent-quant-trading",
@@ -56,4 +58,23 @@ export const posts: BlogPost[] = [
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return posts.find((p) => p.slug === slug);
+}
+
+/* 统一筛选已发布文章，避免首页与博客页各自维护过滤逻辑。 */
+export function getPublishedPosts(allPosts: BlogPost[] = posts): BlogPost[] {
+  return allPosts.filter((post) => post.published);
+}
+
+/* 首页研究区固定返回一篇主文章与最多两篇辅助文章。 */
+export function getHomeResearchPosts(allPosts: BlogPost[] = posts): {
+  featured: BlogPost;
+  secondary: BlogPost[];
+} {
+  const publishedPosts = getPublishedPosts(allPosts);
+  const featuredPost = publishedPosts.find((post) => post.featuredOnHome) ?? publishedPosts[0];
+
+  return {
+    featured: featuredPost,
+    secondary: publishedPosts.filter((post) => post.slug !== featuredPost.slug).slice(0, 2),
+  };
 }
