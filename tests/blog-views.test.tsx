@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import BlogIndexView from "@/app/components/blog/BlogIndexView";
 import BlogPostView from "@/app/components/blog/BlogPostView";
 import { getPostBySlug, posts } from "@/app/blog/posts";
+import { vi } from "vitest";
 
 describe("blog views", () => {
   /* 博客列表页里的多篇文章应使用统一模板，按竖向单列排列。 */
@@ -81,5 +82,43 @@ describe("blog views", () => {
     expect(screen.getByText(/AI 不是不聪明，是不知道该在哪停/)).toBeInTheDocument();
     expect(screen.queryByText("核心摘要")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "博客列表" })).toBeInTheDocument();
+  });
+
+  /* AGENTS 文章需要提供可一键复制的 Markdown 面板，方便用户直接粘贴使用。 */
+  it("renders a copyable markdown panel for the published agents article", async () => {
+    const post = getPostBySlug("recommended-agents-md");
+
+    if (!post) {
+      throw new Error("expected published agents post fixture");
+    }
+
+    const writeText = vi.fn().mockResolvedValue(undefined);
+
+    Object.defineProperty(globalThis.navigator, "clipboard", {
+      configurable: true,
+      value: { writeText },
+    });
+
+    render(<BlogPostView post={post} />);
+
+    const panelHint = screen.getByText("一键复制后可直接粘贴到本地规则文件。");
+    const finalSectionHeading = screen.getByRole("heading", { name: "不只是 Spec" });
+
+    expect(
+      finalSectionHeading.compareDocumentPosition(panelHint) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(screen.getByText("1")).toBeInTheDocument();
+    expect(screen.queryByText("001")).not.toBeInTheDocument();
+    expect(screen.getByText(/# 语言/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "copy AGENTS.md 文本" })).toHaveTextContent("copy");
+
+    fireEvent.click(screen.getByRole("button", { name: "copy AGENTS.md 文本" }));
+
+    await waitFor(() => {
+      expect(writeText).toHaveBeenCalledTimes(1);
+    });
+    expect(writeText.mock.calls[0][0]).toContain("# Workflow Orchestration");
+    expect(writeText.mock.calls[0][0]).toContain("和我对话的语言默认中文");
+    expect(await screen.findByRole("button", { name: "copied AGENTS.md 文本" })).toBeInTheDocument();
   });
 });

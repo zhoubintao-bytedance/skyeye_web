@@ -96,15 +96,79 @@ select {
 .scrollbar-thin::-webkit-scrollbar {
   height: 6px;
 }
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: transparent;
-}
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background: #76b900;
   border-radius: 3px;
 }
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: #3860be;
+}
+
+.scrollbar-fine::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.scrollbar-fine::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-fine::-webkit-scrollbar-thumb {
+  background: #76b900;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 1px rgba(118, 185, 0, 0.16);
+}
+.scrollbar-fine::-webkit-scrollbar-thumb:hover {
+  background: #bff230;
+}
+
+/* ── AGENTS copy panel ── */
+.agents-copy-panel {
+  position: relative;
+}
+
+.agents-copy-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top right, rgba(118, 185, 0, 0.12) 0%, rgba(118, 185, 0, 0.02) 28%, transparent 56%),
+    linear-gradient(90deg, rgba(118, 185, 0, 0.08) 0, rgba(118, 185, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size:
+    auto,
+    34px 100%,
+    100% 34px;
+  opacity: 0.72;
+}
+
+.agents-copy-editor {
+  background:
+    linear-gradient(180deg, rgba(6, 10, 6, 0.98) 0%, rgba(2, 3, 2, 1) 100%),
+    linear-gradient(135deg, rgba(118, 185, 0, 0.05) 0%, transparent 30%);
+}
+
+.agents-copy-code-row {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.agents-copy-line-number {
+  color: rgba(167, 167, 167, 0.55);
+  text-align: right;
+  user-select: none;
+  padding-right: 0.8rem;
+  border-right: 1px solid rgba(118, 185, 0, 0.14);
+}
+
+.agents-copy-line-text {
+  white-space: pre;
+  color: #d7dad5;
+  padding-left: 0.15rem;
 }
 
 /* ── Poem poster styles ── */

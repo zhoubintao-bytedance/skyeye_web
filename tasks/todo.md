@@ -259,6 +259,84 @@
 
 ## 博客细节修正任务
 
+## 博客 AGENTS 规则框增强任务
+
+- [x] 阅读现有博客数据、详情页模板、博客样式与任务约束，整理现状
+- [x] 输出并确认现状分析
+- [x] 输出并确认功能点与交互范围
+- [x] 输出并确认风险与关键设计决策
+- [x] 在用户确认 Spec 后实现 AGENTS 文章内的可复制规则框与样式
+- [x] 完成验证并在本节末尾记录 review
+- [x] 先在 `tests/blog-views.test.tsx` 补充 AGENTS 文章复制框的失败测试
+- [x] 新增局部 client 复制框组件，处理复制按钮、成功反馈与可访问性
+- [x] 将用户提供的 Markdown 原文接入 AGENTS 文章详情页专用模块
+- [x] 按 `DESIGN.md` 调整复制框的黑底工业面板样式，并兼顾移动端滚动
+- [x] 运行针对性测试、lint 与 build，并在本节末尾补 review
+
+## 博客 AGENTS 规则框增强 Review
+
+- `npm run test -- tests/blog-views.test.tsx`：通过，5 个测试全部通过；新增覆盖 AGENTS 文章复制框渲染、复制按钮点击和原文复制断言
+- `npm run lint -- app/components/blog/AgentsMarkdownCopyPanel.tsx app/components/blog/BlogPostView.tsx app/blog/recommendedAgentsMarkdown.ts tests/blog-views.test.tsx`：通过，无错误无警告
+- `npm run build`：通过，静态生成 `/blog/recommended-agents-md` 与既有博客页面成功
+
+## 博客 AGENTS 规则框微调任务
+
+- [x] 将专用黑色复制面板移动到 AGENTS 文章正文末尾
+- [x] 收紧复制按钮尺寸，并将按钮可见文案改为 `copy`
+- [x] 调整 AGENTS 文章正文分节标题宽度，避免桌面端标题挤成两行
+- [x] 将 AGENTS 文章说明文案改得更贴近用户提供的原始规则内容
+- [x] 完成验证并在本节末尾记录 review
+
+## 博客 AGENTS 规则框微调 Review
+
+- `npm run test -- tests/blog-views.test.tsx`：通过，5 个测试全部通过；已覆盖复制面板移动到正文后、按钮文案为 `copy`、点击复制与成功反馈
+- `npm run lint -- app/components/blog/AgentsMarkdownCopyPanel.tsx app/components/blog/BlogPostView.tsx app/blog/posts.ts tests/blog-views.test.tsx`：通过，无错误无警告
+- `npm run build`：通过，静态生成 `/blog/recommended-agents-md` 与既有博客页面成功
+
+## 博客 AGENTS 面板收缩微调任务
+
+- [x] 将 `copy` 按钮再缩小一档
+- [x] 将 AGENTS 面板滚动区再缩短一档
+- [x] 为 AGENTS 面板接入更细的专用滚动条样式
+- [ ] 完成验证并在本节末尾记录 review
+
+## 博客 AGENTS 滚动条颜色回调任务
+
+- [x] 将 AGENTS 面板细滚动条颜色恢复为更明确的 NVIDIA 绿色
+- [x] 完成验证并在本节末尾记录 review
+
+## 博客 AGENTS 滚动条颜色回调 Review
+
+- `npm run test -- tests/blog-views.test.tsx`：通过，5 个测试全部通过
+- `npm run build`：通过，静态生成 `/blog/recommended-agents-md` 与既有博客页面成功
+
+## 博客 AGENTS 编辑器质感增强任务
+
+- [x] 将复制面板背景改成更贴近 NVIDIA 风格的技术纹理
+- [x] 为复制面板正文增加 Markdown 编辑器式行号
+- [ ] 完成验证并在本节末尾记录 review
+
+## 博客 AGENTS 行号分隔微调任务
+
+- [x] 拉开行号与正文内容的视觉间距
+- [x] 降低行号颜色存在感
+- [x] 完成验证并在本节末尾记录 review
+
+## 博客 AGENTS 行号分隔微调 Review
+
+- `npm run test -- tests/blog-views.test.tsx`：通过，5 个测试全部通过
+- `npm run build`：通过，静态生成 `/blog/recommended-agents-md` 与既有博客页面成功
+
+## 博客 AGENTS 行号格式微调任务
+
+- [x] 将编辑器行号改成不补零的自然数字格式
+- [x] 完成验证并在本节末尾记录 review
+
+## 博客 AGENTS 行号格式微调 Review
+
+- `npm run test -- tests/blog-views.test.tsx`：通过，5 个测试全部通过；已覆盖行号改为自然数字格式且不再出现 `001`
+- `npm run build`：通过，静态生成 `/blog/recommended-agents-md` 与既有博客页面成功
+
 - [x] 按用户反馈确认博客列表顺序、摘要模板、诗歌页防剧透和返回按钮的现状根因
 - [x] 先修改 `tests/blog-views.test.tsx`，锁定日期倒序、统一头部模板、诗歌页不显示剧透摘要、返回按钮新文案
 - [x] 修改 `app/blog/posts.ts`、`app/components/blog/BlogPostView.tsx`、`app/components/blog/BlogIndexView.tsx`，落实上述 4 项修正

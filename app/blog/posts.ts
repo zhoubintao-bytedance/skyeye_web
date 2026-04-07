@@ -81,23 +81,26 @@ export const posts: BlogPost[] = [
       {
         heading: "为什么推荐",
         paragraphs: [
-          "推荐一份好用的 AGENTS.md，搭配 Codex 效果不错，非常适合新手伙伴，这里分享一下。",
-          "它最有价值的地方不是规则多，而是把任务复杂度和执行流程明确对齐，避免一上来就把所有需求都按重流程处理。",
+          "这份 AGENTS.md 最好的地方，不是规则堆得多，而是很多话都写得很直接，拿来就能用。",
+          "它把语言、注意事项、代码规范和任务管理放在同一个约束体系里，尤其适合刚开始和 Codex 配合的新手伙伴。",
         ],
+        bullets: ["默认中文交流", "默认不自动生成说明文档", "函数和关键逻辑都要求中文注释"],
       },
       {
         heading: "渐进式 Spec",
         paragraphs: [
-          "核心是渐进式 Spec，思路很简单：不同复杂度走不同深度的流程，偶然复杂度能压就压。",
-          "改个字段、修个 bug，直接做，没有 Spec 的必要。",
-          "3 步以上、有架构决策，先写轻量 Spec，我确认了再动代码。",
-          "跨模块、多系统，走完整 Propose → Apply → Review。",
+          "它最核心的一段就是渐进式 Spec：不同复杂度的需求，走不同深度的流程，偶然复杂度应该尽可能压缩。",
+        ],
+        bullets: [
+          "简单（改字段、修 bug）：直接执行，无需 Spec",
+          "中等（3+ 步骤，有架构决策）：写轻量 Spec，HARD-GATE 后再编码",
+          "复杂（跨模块、多系统）：完整 Propose → Apply → Review",
         ],
       },
       {
         heading: "Spec 三铁律",
         paragraphs: [
-          "这套约束里最关键的是三条规则，它们把 Spec 放在代码之前，也把执行中的偏差拉回到文档真相上。",
+          "这套约束最有力量的地方，是把 Spec 放在代码之前，也把执行中的偏差重新拉回到文档真相上。",
         ],
         bullets: [
           "No Spec, No Code",
@@ -108,8 +111,15 @@ export const posts: BlogPost[] = [
       {
         heading: "不只是 Spec",
         paragraphs: [
-          "除了 Spec，里面还有 subagent 策略、执行自由度曲线、验证铁律、自我纠错循环。",
-          "这些规则合在一起，能让 AI 在调研、规划、执行、验收各阶段都更稳，不会一路写到底才发现方向错了。",
+          "这份规则真正完整的地方，在于它不只讲 Spec，还把调研、规划、执行、验证和复盘都串起来了。",
+        ],
+        bullets: [
+          "Plan Node Default：中等及以上复杂度任务默认进入 plan mode",
+          "Subagent Strategy：Research、探索和并行分析尽量交给 subagent",
+          "执行自由度曲线：调研、设计、规划、执行、验收各阶段自由度不同",
+          "Verification 铁律：未经验证，不得标记为完成",
+          "Task Management：先写计划、追踪进度、记录 review",
+          "Core Principles：Simplicity First、Minimal Impact、意图分离",
         ],
       },
     ],

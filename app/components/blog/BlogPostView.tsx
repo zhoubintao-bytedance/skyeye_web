@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { BlogPost, BlogPostSection, categoryColors } from "@/app/blog/posts";
+import AgentsMarkdownCopyPanel from "@/app/components/blog/AgentsMarkdownCopyPanel";
+import { recommendedAgentsMarkdown } from "@/app/blog/recommendedAgentsMarkdown";
 
 /* 诗歌文章正文继续保留特殊排版，只是换到新的站点视觉外壳里。 */
 function PoemPost() {
@@ -98,7 +100,13 @@ function PoemPost() {
 }
 
 /* 通用正文按分节数据渲染，避免未来文章只能展示头部信息。 */
-function GenericPostBody({ sections }: { sections: BlogPostSection[] }) {
+function GenericPostBody({
+  sections,
+  wideHeading,
+}: {
+  sections: BlogPostSection[];
+  wideHeading?: boolean;
+}) {
   /* 通用文章按“索引列 + 内容列”组织，强化工业化阅读节奏。 */
   return (
     <div className="mt-10 space-y-5">
@@ -107,12 +115,22 @@ function GenericPostBody({ sections }: { sections: BlogPostSection[] }) {
           key={`${section.heading}-${index}`}
           className="blog-article-panel p-6 md:p-7"
         >
-          <div className="grid gap-6 md:grid-cols-[11rem_minmax(0,1fr)]">
+          <div
+            className={[
+              "grid gap-6",
+              wideHeading ? "md:grid-cols-[15rem_minmax(0,1fr)]" : "md:grid-cols-[11rem_minmax(0,1fr)]",
+            ].join(" ")}
+          >
             <div className="md:border-r md:border-[rgba(118,185,0,0.18)] md:pr-6">
               <p className="text-[0.72rem] font-bold uppercase tracking-[0.24em] text-[#76b900]">
                 Module {String(index + 1).padStart(2, "0")}
               </p>
-              <h2 className="mt-3 text-[1.85rem] font-bold leading-[1.1] text-white">
+              <h2
+                className={[
+                  "mt-3 font-bold leading-[1.1] text-white",
+                  wideHeading ? "text-[1.6rem] md:whitespace-nowrap" : "text-[1.85rem]",
+                ].join(" ")}
+              >
                 {section.heading}
               </h2>
             </div>
@@ -208,6 +226,7 @@ function PostHero({
 export default function BlogPostView({ post }: { post: BlogPost }) {
   const color = categoryColors[post.category] || "#76b900";
   const isPoemPost = post.slug === "claude-code-setup-story";
+  const isAgentsPost = post.slug === "recommended-agents-md";
 
   return (
     <main className="bg-black py-14 text-white md:py-18">
@@ -231,8 +250,9 @@ export default function BlogPostView({ post }: { post: BlogPost }) {
 
         {isPoemPost ? <PoemPost /> : null}
         {!isPoemPost && post.body?.length ? (
-          <GenericPostBody sections={post.body} />
+          <GenericPostBody sections={post.body} wideHeading={isAgentsPost} />
         ) : null}
+        {isAgentsPost ? <AgentsMarkdownCopyPanel markdown={recommendedAgentsMarkdown} /> : null}
       </div>
     </main>
   );
