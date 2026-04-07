@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { companyProfile, homepageNavItems } from "@/app/content/homepage";
+import ResponsiveImage from "@/app/components/ResponsiveImage";
+import { companyProfile, homepageNavItems, siteBranding } from "@/app/content/homepage";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -13,9 +14,13 @@ export default function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-[rgba(118,185,0,0.28)] bg-[rgba(0,0,0,0.96)] text-white backdrop-blur-sm">
       <div className="mx-auto flex w-[92%] max-w-[1200px] items-center justify-between gap-8 py-5">
         <a href={`${basePath}/#hero`} className="flex items-center gap-3 no-underline">
-          <img
+          <ResponsiveImage
             src={`${basePath}/imgs/skyeye_logo.png`}
             alt="天眼投资 Logo"
+            width={siteBranding.logoWidth}
+            height={siteBranding.logoHeight}
+            sizes="176px"
+            priority
             className="h-10 w-auto object-contain md:h-11"
           />
           <div>

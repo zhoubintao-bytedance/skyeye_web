@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BlogPost, categoryColors } from "@/app/blog/posts";
+import { BlogPost, BlogPostSection, categoryColors } from "@/app/blog/posts";
 
 /* 诗歌文章正文继续保留特殊排版，只是换到新的站点视觉外壳里。 */
 function PoemPost() {
@@ -97,6 +97,36 @@ function PoemPost() {
   );
 }
 
+/* 通用正文按分节数据渲染，避免未来文章只能展示头部信息。 */
+function GenericPostBody({ sections }: { sections: BlogPostSection[] }) {
+  return (
+    <div className="mt-10 space-y-6">
+      {sections.map((section) => (
+        <article
+          key={section.heading}
+          className="border border-[rgba(94,94,94,0.95)] bg-[#050505] p-6"
+        >
+          <h2 className="text-2xl font-bold leading-[1.2] text-white">{section.heading}</h2>
+          <div className="mt-4 space-y-4">
+            {section.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="text-sm leading-[1.9] text-[#c9c9c9]">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+          {section.bullets?.length ? (
+            <ul className="mt-4 space-y-2 pl-5 text-sm leading-[1.8] text-[#a7a7a7]">
+              {section.bullets.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
+          ) : null}
+        </article>
+      ))}
+    </div>
+  );
+}
+
 /* 文章详情页统一输出新的研究站外壳，并根据 slug 渲染正文内容。 */
 export default function BlogPostView({ post }: { post: BlogPost }) {
   const color = categoryColors[post.category] || "#76b900";
@@ -150,6 +180,9 @@ export default function BlogPostView({ post }: { post: BlogPost }) {
         </div>
 
         {post.slug === "claude-code-setup-story" ? <PoemPost /> : null}
+        {post.slug !== "claude-code-setup-story" && post.body?.length ? (
+          <GenericPostBody sections={post.body} />
+        ) : null}
       </div>
     </main>
   );

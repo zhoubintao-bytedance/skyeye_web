@@ -1,15 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import ResponsiveImage from "@/app/components/ResponsiveImage";
+import useAccessibleDialog from "@/app/components/useAccessibleDialog";
 
 /* 微信二维码弹窗作为联系合作入口，沿用新的工业化按钮样式。 */
-export default function WeChatQRModal({ qrSrc }: { qrSrc: string }) {
+export default function WeChatQRModal({
+  qrSrc,
+  qrWidth = 828,
+  qrHeight = 1124,
+}: {
+  qrSrc: string;
+  qrWidth?: number;
+  qrHeight?: number;
+}) {
   const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useAccessibleDialog({
+    open,
+    onClose: () => setOpen(false),
+    triggerRef,
+    initialFocusRef: closeButtonRef,
+  });
 
   return (
     <>
       <button
+        ref={triggerRef}
+        type="button"
         onClick={() => setOpen(true)}
+        aria-label="微信"
         className="inline-flex cursor-pointer items-center gap-2 border-2 border-[#76b900] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[#1eaedb]"
         title="微信"
       >
@@ -25,10 +47,15 @@ export default function WeChatQRModal({ qrSrc }: { qrSrc: string }) {
           onClick={() => setOpen(false)}
         >
           <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="微信联系"
             className="relative mx-4 max-w-sm border border-[rgba(118,185,0,0.45)] bg-[#050505] p-6 shadow-[0_0_5px_rgba(0,0,0,0.3)]"
             onClick={(e) => e.stopPropagation()}
           >
             <button
+              ref={closeButtonRef}
+              type="button"
               onClick={() => setOpen(false)}
               aria-label="关闭微信二维码"
               className="absolute top-2 right-3 cursor-pointer border-none bg-transparent text-2xl text-[#898989] hover:text-[#76b900]"
@@ -36,7 +63,14 @@ export default function WeChatQRModal({ qrSrc }: { qrSrc: string }) {
               &times;
             </button>
             <p className="mb-3 text-center text-sm font-bold text-[#76b900]">微信联系</p>
-            <img src={qrSrc} alt="微信二维码" className="mx-auto h-64 w-64 object-contain" />
+            <ResponsiveImage
+              src={qrSrc}
+              alt="微信二维码"
+              width={qrWidth}
+              height={qrHeight}
+              sizes="16rem"
+              className="mx-auto h-64 w-64 object-contain"
+            />
           </div>
         </div>
       )}

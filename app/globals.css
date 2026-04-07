@@ -3,6 +3,7 @@
 :root {
   --background: #000000;
   --foreground: #ffffff;
+  --sticky-header-offset: 104px;
   --brand-green: #76b900;
   --brand-green-light: #bff230;
   --hover-blue: #3860be;
@@ -32,7 +33,12 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--sticky-header-offset);
   background: var(--background);
+}
+
+.anchor-section {
+  scroll-margin-top: calc(var(--sticky-header-offset) + 8px);
 }
 
 body {
@@ -152,6 +158,10 @@ select {
 }
 
 @media (min-width: 768px) {
+  :root {
+    --sticky-header-offset: 112px;
+  }
+
   .poem-poster {
     padding: 80px 80px 60px;
   }

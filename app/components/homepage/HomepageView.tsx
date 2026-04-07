@@ -1,5 +1,6 @@
 import AvatarModal from "@/app/components/AvatarModal";
 import ImagePreviewModal from "@/app/components/ImagePreviewModal";
+import ResponsiveImage from "@/app/components/ResponsiveImage";
 import WeChatQRModal from "@/app/components/WeChatQRModal";
 import {
   agentProfiles,
@@ -152,14 +153,21 @@ function ProductShowcaseGrid() {
                 <ImagePreviewModal
                   src={`${basePath}${product.primaryImageSrc}`}
                   alt={product.primaryImageAlt}
+                  width={product.primaryImageWidth}
+                  height={product.primaryImageHeight}
                   title={product.title}
                   subtitle={product.primaryLabel}
                   buttonClassName="w-full"
                   imageClassName="w-full border border-[rgba(94,94,94,0.95)] bg-white object-cover"
+                  sizes="(min-width: 1280px) 42vw, 92vw"
                 />
               </div>
 
-              {product.secondaryLabel && product.secondaryImageSrc && product.secondaryImageAlt ? (
+              {product.secondaryLabel &&
+              product.secondaryImageSrc &&
+              product.secondaryImageAlt &&
+              product.secondaryImageWidth &&
+              product.secondaryImageHeight ? (
                 <div>
                   <p className="mb-3 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#898989]">
                     {product.secondaryLabel}
@@ -167,10 +175,13 @@ function ProductShowcaseGrid() {
                   <ImagePreviewModal
                     src={`${basePath}${product.secondaryImageSrc}`}
                     alt={product.secondaryImageAlt}
+                    width={product.secondaryImageWidth}
+                    height={product.secondaryImageHeight}
                     title={product.title}
                     subtitle={product.secondaryLabel}
                     buttonClassName="w-full"
                     imageClassName="w-full border border-[rgba(94,94,94,0.95)] bg-white object-cover"
+                    sizes="(min-width: 1280px) 42vw, 92vw"
                   />
                 </div>
               ) : null}
@@ -202,6 +213,8 @@ function AgentCoordinationPanel() {
                 alt={`${agent.name} 头像`}
                 name={agent.name}
                 title={agent.title}
+                width={agent.imageWidth}
+                height={agent.imageHeight}
                 className={`h-20 w-20 rounded-full border border-[#d7d7d7] object-cover ${agent.imageClassName || ""}`}
               />
               <div className="pt-1">
@@ -231,6 +244,8 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
           alt={`${member.name} 头像`}
           name={member.name}
           title={member.fullTitle}
+          width={member.imageWidth}
+          height={member.imageHeight}
           className={`h-24 w-24 shrink-0 rounded-full object-cover ${member.imageClassName || ""}`}
         />
         <div className="min-w-0 pr-3 md:pr-4">
@@ -282,6 +297,8 @@ function TrustLayerPanel() {
                 src={`${basePath}${item.imageSrc}`}
                 alt={item.title}
                 name={item.title}
+                width={item.imageWidth}
+                height={item.imageHeight}
                 className="aspect-[4/3] w-full object-cover"
               />
               <p className="mt-3 text-sm font-bold text-black">{item.title}</p>
@@ -364,7 +381,7 @@ function ContactPanel() {
         </div>
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <WeChatQRModal qrSrc={`${basePath}/imgs/wx.jpg`} />
+          <WeChatQRModal qrSrc={`${basePath}/imgs/wx.jpg`} qrWidth={828} qrHeight={1124} />
           {socialLinks.map((platform) => (
             <a
               key={platform.label}
@@ -373,9 +390,12 @@ function ContactPanel() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border border-[rgba(94,94,94,0.95)] px-4 py-2 text-sm font-bold text-white no-underline transition-colors hover:border-[#76b900] hover:text-[#76b900]"
             >
-              <img
+              <ResponsiveImage
                 src={`${basePath}${platform.iconSrc}`}
                 alt={platform.label}
+                width={platform.iconWidth}
+                height={platform.iconHeight}
+                sizes="20px"
                 className="h-5 w-5 object-contain"
               />
               {platform.label}
@@ -424,10 +444,14 @@ export default function HomepageView() {
               <ImagePreviewModal
                 src={`${basePath}${heroContent.chartSrc}`}
                 alt={heroContent.chartAlt}
+                width={heroContent.chartWidth}
+                height={heroContent.chartHeight}
                 title="TX1 回测总览"
                 subtitle="首屏主图"
                 buttonClassName="w-full"
                 imageClassName="w-full border border-[rgba(94,94,94,0.95)] bg-white object-cover"
+                sizes="(min-width: 1280px) 54vw, 92vw"
+                priority
               />
             </div>
           </div>
@@ -438,7 +462,7 @@ export default function HomepageView() {
         </div>
       </section>
 
-      <section id="research-system" className="bg-[#020202] py-16 text-white md:py-20">
+      <section id="research-system" className="anchor-section bg-[#020202] py-16 text-white md:py-20">
         <div className="mx-auto w-[92%] max-w-[1200px]">
           <SectionHeader
             eyebrow="Research System"
@@ -450,7 +474,7 @@ export default function HomepageView() {
         </div>
       </section>
 
-      <section id="capabilities" className="bg-black py-16 text-white md:py-20">
+      <section id="capabilities" className="anchor-section bg-black py-16 text-white md:py-20">
         <div className="mx-auto w-[92%] max-w-[1200px]">
           <SectionHeader
             eyebrow="Products & Evidence"
@@ -462,7 +486,7 @@ export default function HomepageView() {
         </div>
       </section>
 
-      <section id="team-credentials" className="bg-black py-16 text-white md:py-20">
+      <section id="team-credentials" className="anchor-section bg-black py-16 text-white md:py-20">
         <div className="mx-auto w-[92%] max-w-[1200px]">
           <SectionHeader
             eyebrow="Team & Credentials"
@@ -474,7 +498,7 @@ export default function HomepageView() {
         </div>
       </section>
 
-      <section id="contact-careers" className="bg-[#020202] py-16 text-white md:py-20">
+      <section id="contact-careers" className="anchor-section bg-[#020202] py-16 text-white md:py-20">
         <div className="mx-auto w-[92%] max-w-[1200px]">
           <SectionHeader
             eyebrow="Contact & Careers"

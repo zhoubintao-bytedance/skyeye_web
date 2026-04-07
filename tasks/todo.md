@@ -230,6 +230,20 @@
 - `npm run test`：通过，4 个测试文件、11 个测试全部通过；同时修复了 `.buildcheck/workspace/tests` 被误扫进 Vitest 的问题
 - `npm run lint`：通过，无错误；保留 5 条既有 `@next/next/no-img-element` 警告，分别位于 `app/components/ImagePreviewModal.tsx`、`app/components/WeChatQRModal.tsx`、`app/components/homepage/HomepageView.tsx`、`app/components/site/SiteHeader.tsx`
 - `npm run build`：沙箱内首次构建因 Turbopack 在 CSS 处理阶段绑定端口失败；随后在沙箱外重跑通过，首页、博客列表页和 `/blog/claude-code-setup-story` 静态生成成功
+
+## 发版跟进任务
+
+- [x] 推送本地 `main` 到远端 `origin/main`
+- [x] 检查推送后的远端提交状态与自动部署入口
+- [x] 持续跟进直到拿到本轮发版结果或明确阻塞
+
+## 发版跟进 Review
+
+- `git push origin main`：成功，远端从 `ba65e30` 更新到 `a648adb`
+- `curl -I --max-time 15 https://skyeye-invest.cc`：返回 `HTTP/2 307` 跳转到 `https://www.skyeye-invest.cc/`，说明主域名入口正常
+- `curl -L --max-time 15 https://skyeye-invest.cc | rg -n "让每一次投资，都更有把握|Agent员工协同|加入我们|博客"`：命中首页新版本关键文案，主站首页已更新
+- `curl -L --max-time 15 https://skyeye-invest.cc/blog | rg -n "博客|Claude Code"`：命中博客列表页标题与精选文章内容，博客列表页已更新
+- `curl -L --max-time 15 https://skyeye-invest.cc/blog/claude-code-setup-story | rg -n "智取Claude记|Claude Code|礼品卡|proxychains"`：命中文章详情页正文内容，博客详情页已更新
 - [x] 完成针对性校验并记录 review
 
 ## 首页主图替换 Review
@@ -407,3 +421,46 @@
 - [ ] 完成风险与决策说明并等待确认
 - [ ] 按确认方案实现首屏结构调整
 - [ ] 完成针对性校验并记录 review
+
+## Review 收敛修复任务
+
+- [x] 核对 review 列表与当前代码，筛选本轮必要修复项
+- [x] 输出并确认现状分析
+- [x] 输出并确认功能点与修复范围
+- [x] 输出并确认风险与关键决策
+- [x] 按确认方案实现必要修复
+- [x] 完成验证并记录 review
+
+## Review 收敛修复现状分析
+
+- 锚点遮挡问题成立：`app/components/site/SiteHeader.tsx` 的 `SiteHeader` 在 `header` 上使用 `sticky top-0`，而 `HomepageView` 里的 `research-system`、`capabilities`、`team-credentials`、`contact-careers` 各 section 仅定义 `id`，没有任何滚动偏移补偿，当前 hash 跳转会落到吸顶栏下方。
+- 弹窗可访问性问题成立：`app/components/ImagePreviewModal.tsx` 的 `ImagePreviewModal` 与 `app/components/WeChatQRModal.tsx` 的 `WeChatQRModal` 都只做了点击蒙层关闭，没有 `role="dialog"`、`aria-modal`、Esc 关闭、焦点回收或背景滚动锁定。
+- 关键图片性能问题成立：`app/components/site/SiteHeader.tsx` 的 `SiteHeader`、`app/components/ImagePreviewModal.tsx` 的 `ImagePreviewModal`、`app/components/WeChatQRModal.tsx` 的 `WeChatQRModal`、`app/components/homepage/HomepageView.tsx` 的 `ProductShowcaseGrid` / `AgentCoordinationPanel` / `TrustLayerPanel` / `ContactPanel` 均继续输出原生 `<img>`，没有稳定尺寸元数据；首屏主图也没有优先加载语义。
+- 博客空状态问题成立：`app/components/blog/BlogIndexView.tsx` 的 `BlogIndexView` 直接解引用 `featured.slug`，而 `app/blog/posts.ts` 的 `getHomeResearchPosts` 返回签名要求必有 `featured`，当前如果已发布文章数为 0，会在列表页直接崩。
+- 博客正文扩展性问题成立：`app/components/blog/BlogPostView.tsx` 的 `BlogPostView` 只有 `post.slug === "claude-code-setup-story"` 时才渲染正文；`app/blog/posts.ts` 的 `posts` 已经存在第二、第三篇草稿数据，一旦发布就只会显示头部信息。
+- `basePath` 项属于条件问题：`next.config.ts` 目前在生产环境默认回退到 `"/skyeye_web"`；如果仍需兼容 GitHub Pages 子路径，这个默认值有意义，但如果未来只发根域名，它会继续带来错误链接风险。本轮是否修，取决于是否要保留 GitHub Pages 兼容。
+
+## Review 收敛修复功能点与范围
+
+- 推荐本轮必修 1：为首页 hash section 增加统一锚点偏移，保证 `SiteHeader` 吸顶时点击导航不会遮住各 section 标题。
+- 推荐本轮必修 2：为 `ImagePreviewModal` 和 `WeChatQRModal` 补齐基础对话框行为，包括 `role="dialog"`、`aria-modal`、Esc 关闭、焦点回收和背景滚动锁定。
+- 推荐本轮必修 3：将站点核心图片从原生 `<img>` 收敛到带稳定尺寸信息的方案，至少覆盖站点 Logo、首屏主图、产品证据图、头像/资质图、微信二维码和社交图标，并给首屏主图加优先加载语义。
+- 推荐本轮必修 4：让 `/blog` 在 0 篇已发布文章时展示空状态而不是崩溃，`getHomeResearchPosts` 需要允许无 featured 结果，`BlogIndexView` 需要分支渲染。
+- 推荐本轮必修 5：让博客详情页支持“正文按文章数据驱动渲染”，即保留 `claude-code-setup-story` 的诗歌特排，同时为其他文章提供通用正文结构，避免第二篇文章发布后只剩头图信息。
+- 推荐本轮暂缓 6：`next.config.ts` 的 `basePath` 默认值先不在这轮一起改，除非确认要放弃 GitHub Pages 子路径兼容；否则容易把现有备用部署链路一起改坏。
+
+## Review 收敛修复风险与决策
+
+- 锚点偏移采用 CSS 统一处理，不在导航点击事件里写 JS 滚动补偿，避免破坏原生 hash 深链接和前进后退行为。
+- 两个弹窗共享一套基础对话框行为，避免 `ImagePreviewModal` 与 `WeChatQRModal` 再次漂移。
+- 图片性能修复只覆盖当前站点的关键可见图片，不顺手扩成整站图片体系重构，控制影响面。
+- 博客列表把“无已发布文章”视为合法状态，在数据层和视图层同时兜底，不依赖调用方保证至少一篇。
+- 博客详情保留 `claude-code-setup-story` 的诗歌特排，同时新增通用正文承载结构给未来文章复用。
+- `next.config.ts` 的 `basePath` 默认逻辑本轮明确暂缓，不改动 GitHub Pages 备用链路。
+
+## Review 收敛修复 Review
+
+- `npm run test -- tests/homepage-view.test.tsx tests/modal-accessibility.test.tsx tests/blog-views.test.tsx`：通过，3 个测试文件、10 个测试全部通过，覆盖锚点类、弹窗语义/关闭行为、博客空状态和通用正文渲染
+- `npm run test`：通过，5 个测试文件、15 个测试全部通过
+- `npm run lint`：通过，无错误无警告
+- `npm run build`：沙箱内首次构建因 Turbopack 在 CSS 处理阶段绑定端口失败；随后在沙箱外重跑通过，首页、博客列表页和 `/blog/claude-code-setup-story` 静态生成成功

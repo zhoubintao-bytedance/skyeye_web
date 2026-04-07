@@ -17,6 +17,12 @@ describe("homepage view", () => {
       "team-credentials",
       "contact-careers",
     ]);
+
+    Array.from(container.querySelectorAll("section[id]"))
+      .filter((element) => element.id !== "hero")
+      .forEach((element) => {
+        expect(element.className).toContain("anchor-section");
+      });
   });
 
   /* 首页首屏要保留真实回测指标，但不再重复承载博客文章列表。 */

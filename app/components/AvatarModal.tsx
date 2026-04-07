@@ -8,18 +8,24 @@ export default function AvatarModal({
   alt,
   name,
   title,
+  width,
+  height,
   className,
 }: {
   src: string;
   alt: string;
   name?: string;
   title?: string;
+  width: number;
+  height: number;
   className?: string;
 }) {
   return (
     <ImagePreviewModal
       src={src}
       alt={alt}
+      width={width}
+      height={height}
       title={name}
       subtitle={title}
       imageClassName={className}

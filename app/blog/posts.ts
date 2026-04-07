@@ -10,6 +10,13 @@ export interface BlogPost {
   readTime: string;
   published: boolean;
   featuredOnHome?: boolean;
+  body?: BlogPostSection[];
+}
+
+export interface BlogPostSection {
+  heading: string;
+  paragraphs: string[];
+  bullets?: string[];
 }
 
 export const categoryColors: Record<string, string> = {
@@ -42,6 +49,22 @@ export const posts: BlogPost[] = [
     category: "TECH",
     readTime: "12 min",
     published: false,
+    body: [
+      {
+        heading: "研究框架",
+        paragraphs: [
+          "先把市场问题拆成可验证的研究假设，再让 Agent 并行完成取数、整理和回测。",
+          "研究流程的目标不是让模型直接替你下注，而是让每一步判断都能被复盘和质疑。",
+        ],
+      },
+      {
+        heading: "执行链路",
+        paragraphs: [
+          "从市场扫描到候选信号生成，再到回测与风控约束，整条链路需要统一的任务编排和结果归档。",
+        ],
+        bullets: ["市场异动抓取", "实验任务拆分", "回测结果回写", "策略结论沉淀"],
+      },
+    ],
   },
   {
     slug: "mid-term-trend-hunting",
@@ -53,6 +76,20 @@ export const posts: BlogPost[] = [
     category: "RESEARCH",
     readTime: "15 min",
     published: false,
+    body: [
+      {
+        heading: "趋势识别",
+        paragraphs: [
+          "中期趋势的核心不是预测拐点，而是识别趋势仍然成立时的持仓窗口。",
+        ],
+      },
+      {
+        heading: "仓位管理",
+        paragraphs: [
+          "把回撤容忍度、因子拥挤度和波动状态一起纳入仓位分配，才能避免只会解释历史而不能指导执行。",
+        ],
+      },
+    ],
   },
 ];
 
@@ -67,14 +104,17 @@ export function getPublishedPosts(allPosts: BlogPost[] = posts): BlogPost[] {
 
 /* 首页研究区固定返回一篇主文章与最多两篇辅助文章。 */
 export function getHomeResearchPosts(allPosts: BlogPost[] = posts): {
-  featured: BlogPost;
+  featured: BlogPost | null;
   secondary: BlogPost[];
 } {
   const publishedPosts = getPublishedPosts(allPosts);
-  const featuredPost = publishedPosts.find((post) => post.featuredOnHome) ?? publishedPosts[0];
+  const featuredPost =
+    publishedPosts.find((post) => post.featuredOnHome) ?? publishedPosts[0] ?? null;
 
   return {
     featured: featuredPost,
-    secondary: publishedPosts.filter((post) => post.slug !== featuredPost.slug).slice(0, 2),
+    secondary: featuredPost
+      ? publishedPosts.filter((post) => post.slug !== featuredPost.slug).slice(0, 2)
+      : [],
   };
 }
