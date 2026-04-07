@@ -110,6 +110,9 @@ describe("blog views", () => {
     expect(screen.getByText("1")).toBeInTheDocument();
     expect(screen.queryByText("001")).not.toBeInTheDocument();
     expect(screen.getByText(/# 语言/)).toBeInTheDocument();
+    expect(
+      screen.getByText("1. **先写计划**：将计划写入 `tasks/todo.md`，使用可勾选的任务项"),
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "copy AGENTS.md 文本" })).toHaveTextContent("copy");
 
     fireEvent.click(screen.getByRole("button", { name: "copy AGENTS.md 文本" }));
@@ -119,6 +122,8 @@ describe("blog views", () => {
     });
     expect(writeText.mock.calls[0][0]).toContain("# Workflow Orchestration");
     expect(writeText.mock.calls[0][0]).toContain("和我对话的语言默认中文");
+    expect(writeText.mock.calls[0][0]).toContain("将计划写入 `tasks/todo.md`");
+    expect(writeText.mock.calls[0][0]).not.toContain("\\`tasks/todo.md\\`");
     expect(await screen.findByRole("button", { name: "copied AGENTS.md 文本" })).toBeInTheDocument();
   });
 });

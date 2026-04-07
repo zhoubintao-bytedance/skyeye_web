@@ -606,3 +606,16 @@
 - `npm run test`：通过，5 个测试文件、15 个测试全部通过
 - `npm run lint`：通过，无错误无警告
 - `npm run build`：沙箱内首次构建因 Turbopack 在 CSS 处理阶段绑定端口失败；随后在沙箱外重跑通过，首页、博客列表页和 `/blog/claude-code-setup-story` 静态生成成功
+
+## AGENTS 复制按钮排障修复任务
+
+- [x] 复现 `recommended-agents-md` 文章复制按钮的实际故障，并定位根因
+- [x] 先补一条能稳定暴露该故障的测试
+- [x] 按根因修复复制按钮逻辑
+- [x] 完成针对性校验并记录 review
+
+## AGENTS 复制按钮排障修复 Review
+
+- 根因定位：`app/blog/recommendedAgentsMarkdown.ts` 使用 `String.raw` 包裹 Markdown 模板字符串，导致源码里为模板字面量写的反引号转义 `\`` 被原样保留，复制到剪贴板后会多出反斜杠。
+- `npm run test -- tests/blog-views.test.tsx`：通过，5 个测试全部通过；新增断言已覆盖面板代码行显示原始反引号，以及复制出的文本不再包含 `\`tasks/todo.md\`` 这类错误转义。
+- `npm run lint -- app/blog/recommendedAgentsMarkdown.ts tests/blog-views.test.tsx`：通过，无错误无警告。

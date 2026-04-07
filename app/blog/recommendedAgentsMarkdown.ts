@@ -1,5 +1,5 @@
-/* 导出 AGENTS 文章里的原始 Markdown，供可复制面板与测试共用同一份内容来源。 */
-export const recommendedAgentsMarkdown = String.raw`# 语言
+/* 导出 AGENTS 文章里的原始 Markdown，使用普通模板字符串避免转义符被一并复制出去。 */
+export const recommendedAgentsMarkdown = `# 语言
 
 - 和我对话的语言默认中文
 
