@@ -99,68 +99,96 @@ function PoemPost() {
 
 /* 通用正文按分节数据渲染，避免未来文章只能展示头部信息。 */
 function GenericPostBody({ sections }: { sections: BlogPostSection[] }) {
+  /* 通用文章按“索引列 + 内容列”组织，强化工业化阅读节奏。 */
   return (
-    <div className="mt-10 space-y-6">
-      {sections.map((section) => (
+    <div className="mt-10 space-y-5">
+      {sections.map((section, index) => (
         <article
-          key={section.heading}
-          className="border border-[rgba(94,94,94,0.95)] bg-[#050505] p-6"
+          key={`${section.heading}-${index}`}
+          className="blog-article-panel p-6 md:p-7"
         >
-          <h2 className="text-2xl font-bold leading-[1.2] text-white">{section.heading}</h2>
-          <div className="mt-4 space-y-4">
-            {section.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="text-sm leading-[1.9] text-[#c9c9c9]">
-                {paragraph}
+          <div className="grid gap-6 md:grid-cols-[11rem_minmax(0,1fr)]">
+            <div className="md:border-r md:border-[rgba(118,185,0,0.18)] md:pr-6">
+              <p className="text-[0.72rem] font-bold uppercase tracking-[0.24em] text-[#76b900]">
+                Module {String(index + 1).padStart(2, "0")}
               </p>
-            ))}
+              <h2 className="mt-3 text-[1.85rem] font-bold leading-[1.1] text-white">
+                {section.heading}
+              </h2>
+            </div>
+
+            <div>
+              <div className="space-y-4">
+                {section.paragraphs.map((paragraph) => (
+                  <p key={paragraph} className="text-sm leading-[1.95] text-[#c9c9c9]">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+
+              {section.bullets?.length ? (
+                <ul className="mt-5 grid gap-3">
+                  {section.bullets.map((bullet) => (
+                    <li
+                      key={bullet}
+                      className="border border-[rgba(118,185,0,0.2)] bg-[rgba(118,185,0,0.05)] px-4 py-3 text-sm leading-[1.8] text-[#d8d8d8]"
+                    >
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
           </div>
-          {section.bullets?.length ? (
-            <ul className="mt-4 space-y-2 pl-5 text-sm leading-[1.8] text-[#a7a7a7]">
-              {section.bullets.map((bullet) => (
-                <li key={bullet}>{bullet}</li>
-              ))}
-            </ul>
-          ) : null}
         </article>
       ))}
     </div>
   );
 }
 
-/* 文章详情页统一输出新的研究站外壳，并根据 slug 渲染正文内容。 */
-export default function BlogPostView({ post }: { post: BlogPost }) {
-  const color = categoryColors[post.category] || "#76b900";
+/* 文章头部统一承载元信息、摘要和高亮要点，通用文章在这里体现新的设计语言。 */
+function PostHero({
+  post,
+  color,
+  isPoemPost,
+}: {
+  post: BlogPost;
+  color: string;
+  isPoemPost: boolean;
+}) {
+  /* 诗歌文章头部不展示长摘要，避免在正文前提前剧透。 */
+  const shouldShowExcerpt = !isPoemPost;
 
   return (
-    <main className="bg-black py-14 text-white md:py-18">
-      <div className="mx-auto w-[92%] max-w-[920px]">
-        <div className="flex flex-wrap items-center gap-4 text-sm">
-          <Link
-            href="/blog"
-            className="text-white no-underline transition-colors hover:text-[#76b900]"
-          >
-            &larr; 返回研究列表
-          </Link>
-          <Link href="/" className="text-white no-underline transition-colors hover:text-[#76b900]">
-            &larr; 返回首页
-          </Link>
-        </div>
+    <section className="blog-article-hero mt-10 p-6 md:p-8">
+      <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.16em] text-[#898989]">
+        <span className="border px-2 py-1 font-bold" style={{ borderColor: color, color }}>
+          {post.category}
+        </span>
+        <span>{post.date}</span>
+        <span>{post.readTime}</span>
+      </div>
 
-        <div className="mt-10 border border-[rgba(94,94,94,0.95)] bg-[#050505] p-6">
-          <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.16em] text-[#898989]">
-            <span
-              className="border px-2 py-1 font-bold"
-              style={{ borderColor: color, color }}
-            >
-              {post.category}
-            </span>
-            <span>{post.date}</span>
-            <span>{post.readTime}</span>
+      <div className="mt-8 grid gap-8">
+        <div>
+          <p className="text-[0.72rem] font-bold uppercase tracking-[0.24em] text-[#76b900]">
+            {isPoemPost ? "Story Archive" : "Research Note"}
+          </p>
+          <h1 className="mt-4 text-4xl font-bold leading-[1.05] text-white md:text-[3.4rem]">
+            {post.title}
+          </h1>
+          {shouldShowExcerpt ? (
+            <p className="mt-5 max-w-3xl text-base leading-[1.9] text-[#d8d8d8]">{post.excerpt}</p>
+          ) : null}
+
+          <div className="mt-7 border-l-2 border-[#76b900] pl-5">
+            <p className="m-0 text-lg italic leading-[1.9] text-[#f1f1f1]">&ldquo;{post.quote}&rdquo;</p>
+            {post.intro ? (
+              <p className="mt-4 text-sm leading-[1.85] text-[#a7a7a7]">{post.intro}</p>
+            ) : null}
           </div>
 
-          <h1 className="mt-6 text-4xl font-bold leading-[1.1] text-white">{post.title}</h1>
-
-          <div className="mt-5 flex flex-wrap gap-2">
+          <div className="mt-7 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <span
                 key={tag}
@@ -170,17 +198,39 @@ export default function BlogPostView({ post }: { post: BlogPost }) {
               </span>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-          <div className="mt-8 border-l-2 border-[#76b900] pl-5">
-            <p className="m-0 text-lg italic leading-[1.8] text-[#d8d8d8]">&ldquo;{post.quote}&rdquo;</p>
-            {post.intro ? (
-              <p className="mt-4 text-sm leading-[1.8] text-[#a7a7a7]">{post.intro}</p>
-            ) : null}
-          </div>
+/* 文章详情页统一输出新的研究站外壳，并根据 slug 渲染正文内容。 */
+export default function BlogPostView({ post }: { post: BlogPost }) {
+  const color = categoryColors[post.category] || "#76b900";
+  const isPoemPost = post.slug === "claude-code-setup-story";
+
+  return (
+    <main className="bg-black py-14 text-white md:py-18">
+      <div className="blog-article-shell mx-auto w-[92%] max-w-[980px]">
+        <div className="flex flex-wrap items-center gap-3 text-sm">
+          <Link
+            href="/blog"
+            className="inline-flex items-center justify-center border-2 border-[#76b900] px-4 py-3 text-[0.82rem] font-bold tracking-[0.12em] text-white no-underline transition-colors hover:bg-[#76b900] hover:text-black"
+          >
+            博客列表
+          </Link>
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center border border-[rgba(94,94,94,0.95)] px-4 py-3 text-[0.82rem] font-bold tracking-[0.12em] text-white no-underline transition-colors hover:border-[#76b900] hover:text-[#76b900]"
+          >
+            返回首页
+          </Link>
         </div>
 
-        {post.slug === "claude-code-setup-story" ? <PoemPost /> : null}
-        {post.slug !== "claude-code-setup-story" && post.body?.length ? (
+        <PostHero post={post} color={color} isPoemPost={isPoemPost} />
+
+        {isPoemPost ? <PoemPost /> : null}
+        {!isPoemPost && post.body?.length ? (
           <GenericPostBody sections={post.body} />
         ) : null}
       </div>

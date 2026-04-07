@@ -1,15 +1,29 @@
 import { render, screen } from "@testing-library/react";
 import BlogIndexView from "@/app/components/blog/BlogIndexView";
 import BlogPostView from "@/app/components/blog/BlogPostView";
-import { BlogPost, getPostBySlug, posts } from "@/app/blog/posts";
+import { getPostBySlug, posts } from "@/app/blog/posts";
 
 describe("blog views", () => {
-  /* 博客列表页要继续承载文章列表，并把对外标题统一成“博客”。 */
-  it("renders published research entries in the redesigned index", () => {
+  /* 博客列表页里的多篇文章应使用统一模板，按竖向单列排列。 */
+  it("renders published research entries as a unified vertical list", () => {
     render(<BlogIndexView posts={posts} />);
 
-    expect(screen.getByRole("heading", { name: "博客" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "博客" })).toHaveClass("bg-[#76b900]", "text-black");
     expect(screen.getByText("智取Claude记")).toBeInTheDocument();
+    expect(screen.getByText("推荐一份好用的 AGENTS.md")).toBeInTheDocument();
+    expect(
+      screen.getByText("一篇记录 Claude Code Pro 订阅配置、支付处理和代理链路打通过程的技术纪实。"),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/大厂精英键盘响/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("集中查看 Skyeye 的研究文章、产品进展和技术记录。"),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText("Featured")).not.toBeInTheDocument();
+    expect(screen.queryByText("More Research")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { level: 2 }).map((item) => item.textContent)).toEqual([
+      "推荐一份好用的 AGENTS.md",
+      "智取Claude记",
+    ]);
     expect(
       screen.queryByText("AI Agent 驱动的量化交易：从理论到实践"),
     ).not.toBeInTheDocument();
@@ -27,6 +41,13 @@ describe("blog views", () => {
 
     expect(screen.getAllByRole("heading", { name: "智取Claude记" }).length).toBeGreaterThan(0);
     expect(screen.getByText("天眼投资CEO出品")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "博客列表" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "返回首页" })).toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        "大厂精英键盘响，欲驭Opus写华章。一首七言叙事诗，记录从零到一打通Claude Code的全过程 —— VPN、美区账号、礼品卡、SSH隧道、proxychains，八步飞渡天堑。",
+      ),
+    ).not.toBeInTheDocument();
   });
 
   /* 当没有任何已发布文章时，列表页应该展示空状态而不是因为 featured 缺失崩溃。 */
@@ -46,31 +67,19 @@ describe("blog views", () => {
   });
 
   /* 非诗歌文章发布后也要有通用正文承载，而不是只显示头部信息。 */
-  it("renders generic body content for non-poem posts", () => {
-    const post: BlogPost = {
-      slug: "ai-agent-quant-trading",
-      title: "AI Agent 驱动的量化交易：从理论到实践",
-      date: "2026-04-05",
-      quote: "当我第一次让AI自己决定买卖点的时候，手心全是汗。",
-      excerpt: "深入探讨如何将大语言模型与传统量化策略结合，构建具备自主决策能力的智能交易系统。",
-      intro: "这篇文章从研究框架、执行链路和风控约束三个角度展开。",
-      tags: ["AI Agent", "量化交易", "策略"],
-      category: "TECH",
-      readTime: "12 min",
-      published: true,
-      body: [
-        {
-          heading: "研究框架",
-          paragraphs: ["先把市场问题拆成可验证的研究假设，再让 Agent 并行完成取数、整理和回测。"],
-        },
-      ],
-    };
+  it("renders the upgraded generic detail template for the published agents article", () => {
+    const post = getPostBySlug("recommended-agents-md");
+
+    if (!post) {
+      throw new Error("expected published agents post fixture");
+    }
 
     render(<BlogPostView post={post} />);
 
-    expect(screen.getByRole("heading", { name: "研究框架" })).toBeInTheDocument();
-    expect(
-      screen.getByText("先把市场问题拆成可验证的研究假设，再让 Agent 并行完成取数、整理和回测。"),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "推荐一份好用的 AGENTS.md" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "渐进式 Spec" })).toBeInTheDocument();
+    expect(screen.getByText(/AI 不是不聪明，是不知道该在哪停/)).toBeInTheDocument();
+    expect(screen.queryByText("核心摘要")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "博客列表" })).toBeInTheDocument();
   });
 });

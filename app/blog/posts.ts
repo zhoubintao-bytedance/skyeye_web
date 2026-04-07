@@ -31,7 +31,7 @@ export const posts: BlogPost[] = [
     title: "智取Claude记",
     date: "2026-03-28",
     quote: "记录一次艰难的配置Claude Code Pro订阅的历程。",
-    excerpt: "大厂精英键盘响，欲驭Opus写华章。一首七言叙事诗，记录从零到一打通Claude Code的全过程 —— VPN、美区账号、礼品卡、SSH隧道、proxychains，八步飞渡天堑。",
+    excerpt: "一篇记录 Claude Code Pro 订阅配置、支付处理和代理链路打通过程的技术纪实。",
     intro: "说实话，作为一个在国内写代码的人，想用上 Claude Code Pro 真的没那么容易。从注册美区账号到搞定礼品卡充值，再到折腾 VPN、SSH 隧道、proxychains……中间踩了无数的坑。但好在最后跑通了，而且整个过程还挺有成就感的。下面这首七言叙事诗，就是我把这段经历写成了诗，算是给自己一个交代吧。",
     tags: ["AI", "Claude", "诗词", "技术"],
     category: "STORY",
@@ -67,6 +67,54 @@ export const posts: BlogPost[] = [
     ],
   },
   {
+    slug: "recommended-agents-md",
+    title: "推荐一份好用的 AGENTS.md",
+    date: "2026-04-07",
+    quote: "AI 不是不聪明，是不知道该在哪停。这套东西解决的就是这个问题。",
+    excerpt: "分享一份适合搭配 Codex 使用的 AGENTS.md。核心不是堆规则，而是用渐进式 Spec 把不同复杂度的任务切到合适流程里。",
+    intro: "这份 AGENTS.md 我自己用下来很顺手，尤其适合刚开始和 Codex 配合的新手伙伴。它把什么时候直接做、什么时候先写 Spec、什么时候要走完整评审讲得很清楚，用起来不容易失控。",
+    tags: ["Codex", "AGENTS.md", "Spec", "工作流"],
+    category: "TECH",
+    readTime: "4 min",
+    published: true,
+    body: [
+      {
+        heading: "为什么推荐",
+        paragraphs: [
+          "推荐一份好用的 AGENTS.md，搭配 Codex 效果不错，非常适合新手伙伴，这里分享一下。",
+          "它最有价值的地方不是规则多，而是把任务复杂度和执行流程明确对齐，避免一上来就把所有需求都按重流程处理。",
+        ],
+      },
+      {
+        heading: "渐进式 Spec",
+        paragraphs: [
+          "核心是渐进式 Spec，思路很简单：不同复杂度走不同深度的流程，偶然复杂度能压就压。",
+          "改个字段、修个 bug，直接做，没有 Spec 的必要。",
+          "3 步以上、有架构决策，先写轻量 Spec，我确认了再动代码。",
+          "跨模块、多系统，走完整 Propose → Apply → Review。",
+        ],
+      },
+      {
+        heading: "Spec 三铁律",
+        paragraphs: [
+          "这套约束里最关键的是三条规则，它们把 Spec 放在代码之前，也把执行中的偏差拉回到文档真相上。",
+        ],
+        bullets: [
+          "No Spec, No Code",
+          "Spec is Truth，代码和 Spec 冲突，错的是代码",
+          "Reverse Sync，执行中发现偏差，先改 Spec 再改代码",
+        ],
+      },
+      {
+        heading: "不只是 Spec",
+        paragraphs: [
+          "除了 Spec，里面还有 subagent 策略、执行自由度曲线、验证铁律、自我纠错循环。",
+          "这些规则合在一起，能让 AI 在调研、规划、执行、验收各阶段都更稳，不会一路写到底才发现方向错了。",
+        ],
+      },
+    ],
+  },
+  {
     slug: "mid-term-trend-hunting",
     title: "中期趋势捕捉方法论：多因子模型实战",
     date: "2026-04-12",
@@ -97,9 +145,11 @@ export function getPostBySlug(slug: string): BlogPost | undefined {
   return posts.find((p) => p.slug === slug);
 }
 
-/* 统一筛选已发布文章，避免首页与博客页各自维护过滤逻辑。 */
+/* 统一筛选并按日期倒序排列已发布文章，避免各处各自维护排序逻辑。 */
 export function getPublishedPosts(allPosts: BlogPost[] = posts): BlogPost[] {
-  return allPosts.filter((post) => post.published);
+  return allPosts
+    .filter((post) => post.published)
+    .sort((left, right) => new Date(right.date).getTime() - new Date(left.date).getTime());
 }
 
 /* 首页研究区固定返回一篇主文章与最多两篇辅助文章。 */

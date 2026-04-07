@@ -219,6 +219,70 @@
 - [x] 将首页主图接入 `public/imgs/` 并替换首屏图源
 - [x] 将首屏图相关文案更新为回测总览语义
 
+## 博客新增任务（AGENTS.md 分享）
+
+- [x] 阅读 `DESIGN.md`、现有博客实现、`tasks/lessons.md` 与近期提交，整理现状
+- [x] 输出并确认现状分析
+- [x] 输出并确认功能点与范围
+- [x] 输出并确认风险与关键设计决策
+- [x] 基于确认后的 Spec 新增博客文章并调整所需样式
+- [x] 完成验证并在本节末尾记录 review
+
+### 实施计划
+
+- [x] 在 `tests/blog-views.test.tsx` 先补充或改造测试，覆盖三件事：新文章在博客列表可见、通用详情页的新结构可渲染、`claude-code-setup-story` 仍保留专用诗歌排版
+- [x] 在 `app/blog/posts.ts` 新增 AGENTS.md 分享文章数据，使用已发布状态 `published: true`、不设置 `featuredOnHome`
+- [x] 在 `app/components/blog/BlogPostView.tsx` 重构通用详情页，保留 `PoemPost` 分支，只升级非诗歌文章的通用模板为更贴近 `DESIGN.md` 的 Hero + 分节内容版式
+- [x] 仅在 `app/globals.css` 增加博客通用文章所需的增量样式，复用现有黑底、绿强调、灰边框 token，不改整站基础样式
+- [x] 完成后运行 `npm run test -- tests/blog-views.test.tsx`
+- [x] 完成后运行 `npm run lint -- app/blog/posts.ts app/components/blog/BlogPostView.tsx tests/blog-views.test.tsx`
+- [x] 如前两项通过，再运行 `npm run build`
+
+## 博客新增任务 Review
+
+- `npm run test -- tests/blog-views.test.tsx`：通过，4 个测试全部通过；已覆盖新文章可见、通用详情模板渲染、诗歌文章保留专用排版
+- `npm run lint -- app/blog/posts.ts app/components/blog/BlogPostView.tsx tests/blog-views.test.tsx`：通过，无错误无警告
+- `npm run build`：沙箱内因 Turbopack 在 CSS 处理阶段创建进程绑定端口受限失败；随后在沙箱外重跑通过，静态生成 `/blog/recommended-agents-md`
+
+## 博客列表布局修正任务
+
+- [x] 确认博客列表横向排布的根因并记录用户期望
+- [x] 先修改 `tests/blog-views.test.tsx`，锁定“统一模板、竖向单列排列”的行为
+- [x] 修改 `app/components/blog/BlogIndexView.tsx`，移除 `featured + secondary` 横向布局，改为统一卡片的垂直列表
+- [x] 完成验证并在本节末尾记录 review
+
+## 博客列表布局修正 Review
+
+- `npm run test -- tests/blog-views.test.tsx`：通过，4 个测试全部通过；已覆盖“无 Featured 分组、无 More Research 分组、已发布文章统一出现”
+- `npm run lint -- app/components/blog/BlogIndexView.tsx tests/blog-views.test.tsx`：通过，无错误无警告
+- `npm run build`：沙箱内仍因 Turbopack 在 CSS 处理阶段创建进程绑定端口受限失败；随后在沙箱外重跑通过，`/blog` 与两篇文章静态生成正常
+
+## 博客细节修正任务
+
+- [x] 按用户反馈确认博客列表顺序、摘要模板、诗歌页防剧透和返回按钮的现状根因
+- [x] 先修改 `tests/blog-views.test.tsx`，锁定日期倒序、统一头部模板、诗歌页不显示剧透摘要、返回按钮新文案
+- [x] 修改 `app/blog/posts.ts`、`app/components/blog/BlogPostView.tsx`、`app/components/blog/BlogIndexView.tsx`，落实上述 4 项修正
+- [x] 完成验证并在本节末尾记录 review
+
+## 博客细节修正 Review
+
+- `npm run test -- tests/blog-views.test.tsx`：通过，4 个测试全部通过；已覆盖列表倒序、统一头部模板、诗歌页不显示剧透摘要、返回按钮新文案
+- `npm run lint -- app/blog/posts.ts app/components/blog/BlogPostView.tsx tests/blog-views.test.tsx`：通过，无错误无警告
+- `npm run build`：沙箱内仍因 Turbopack 在 CSS 处理阶段创建进程绑定端口受限失败；随后在沙箱外重跑通过，`/blog` 与两篇文章静态生成正常
+
+## 博客列表头部与摘要修正任务
+
+- [x] 确认 `/blog` 页仍存在剧透摘要、重复标题和多余说明句的根因
+- [x] 先修改 `tests/blog-views.test.tsx`，锁定非剧透摘要、单一绿色标题和无说明句
+- [x] 修改 `app/blog/posts.ts` 与 `app/components/blog/BlogIndexView.tsx`，落实列表摘要与标题修正
+- [x] 完成验证并在本节末尾记录 review
+
+## 博客列表头部与摘要修正 Review
+
+- `npm run test -- tests/blog-views.test.tsx`：通过，4 个测试全部通过；已覆盖非剧透摘要、单一绿色标题、无说明句
+- `npm run lint -- app/blog/posts.ts app/components/blog/BlogIndexView.tsx tests/blog-views.test.tsx`：通过，无错误无警告
+- `npm run build`：通过，`/blog` 与两篇文章静态生成正常
+
 ## 发版前提交任务
 
 - [x] 盘点当前工作区改动并识别不应入库的本地产物
