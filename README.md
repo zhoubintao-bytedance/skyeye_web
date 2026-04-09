@@ -2,7 +2,7 @@
 
 天眼投资北京有限公司官方网站。公司专注于 AI 驱动的量化投资，本站为单页应用，涵盖公司介绍、核心团队、产品服务、招聘与联系方式。
 
-线上地址：https://zhoubintao-bytedance.github.io/skyeye_web/
+线上地址：[https://zhoubintao-bytedance.github.io/skyeye_web/](https://www.skyeye-invest.cc/)
 
 ## 技术栈
 
